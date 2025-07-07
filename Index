@@ -1,0 +1,58 @@
+Low Level Design (LLD) Concepts - Index
+
+1. Object-Oriented Design Principles
+
+   - SOLID Principles
+   - Design Patterns (Creational, Structural, Behavioral)
+   - Encapsulation, Abstraction, Inheritance, Polymorphism
+
+2. Class Diagrams & UML
+
+   - Class, Object, Sequence, Activity Diagrams
+   - Relationships: Association, Aggregation, Composition, Inheritance
+
+3. System Design Components
+
+   - Service Layer, DAO Layer, Controllers
+   - DTOs, Value Objects, Entities
+
+4. Design Patterns
+
+   - Singleton, Factory, Builder, Prototype
+   - Adapter, Decorator, Proxy, Facade
+   - Observer, Strategy, Command, State, Template Method
+
+5. API Design
+
+   - RESTful APIs, Versioning, Error Handling
+   - Request/Response Models
+
+6. Database Design
+
+   - ER Diagrams, Normalization, Indexing
+   - Transactions, ACID Properties
+
+7. Caching
+
+   - Types of Caching (In-memory, Distributed)
+   - Cache Invalidation Strategies
+
+8. Concurrency & Thread Safety
+
+   - Locks, Synchronization, Deadlocks
+   - Thread-safe Collections
+
+9. Testing
+
+   - Unit Testing, Integration Testing, Mocking
+
+10. Code Quality
+
+    - Code Reviews, Static Analysis, Refactoring
+
+11. Logging & Monitoring
+
+    - Log Levels, Structured Logging, Metrics
+
+12. Security
+    - Authentication, Authorization, Input Validation
