@@ -1,7 +1,7 @@
 Low Level Design (LLD) Concepts - Index
 
-S.O.L.I.D Principles
-Strategy Pattern
+S.O.L.I.D Principles -> Done
+Strategy Pattern -> 
 Observer Pattern
 Design Notify-Me Button Functionality
 Decorator Pattern
@@ -123,3 +123,8 @@ Categorized:
 
 12. Security
     - Authentication, Authorization, Input Validation
+
+
+
+Command to query and understand->
+explain strategy pattern in lld with example, when to use, how to use, advantages, disadvantages
