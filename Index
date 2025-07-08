@@ -2,12 +2,12 @@ Low Level Design (LLD) Concepts - Index
 
 S.O.L.I.D Principles -> Done
 Strategy Pattern -> Done
-Observer Pattern
-Design Notify-Me Button Functionality
-Decorator Pattern
-Design  Pizza Billing System
+Observer Pattern -> Done
+Design Notify-Me Button Functionality -> Done
+Decorator Pattern -> Done
+Design Pizza Billing System
 Factory Pattern
-Design  Parking Lot
+Design Parking Lot
 Abstract Factory Pattern
 Design  Snake n Ladder game
 Chain of Responsibility Pattern
