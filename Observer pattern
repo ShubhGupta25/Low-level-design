@@ -1,5 +1,7 @@
 # Observer Pattern in Low Level Design (LLD)
 
+#Event Driven Architecture is the perfect example for Observer Pattern.
+
 ## What is the Observer Pattern?
 
 The Observer Pattern is a behavioral design pattern where an object (the subject) maintains a list of dependents (observers) and notifies them automatically of any state changes, usually by calling one of their methods. It is also known as the Publish-Subscribe pattern.

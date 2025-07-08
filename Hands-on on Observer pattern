@@ -1,0 +1,113 @@
+/**
+* Design Notify-Me Button Functionality
+* 
+* When we click nofity-me, we subscribe to get notification once a certain event occurs.
+* So we are observing for a certain event to occur.
+* So it is typical example of observer design pattern
+*/
+
+/**
+ * Observer interface: Defines the contract for all observers.
+ * Any class that wants to receive notifications must implement this interface.
+ */
+interface Observer {
+    void notify(String message); // Called by Subject to notify observer of an event
+}
+
+/**
+ * Student class: A concrete implementation of Observer.
+ * Represents a student who wants to be notified about events (e.g., next stage counselling).
+ * Uses Lombok annotations for logging and builder pattern.
+ */
+@Slf4j
+@Builder
+class Student implements Observer {
+    private String firstName;
+    private String lastName;
+
+    @Override
+    public void notify(String message) {
+        // This method is called when the student receives a notification from the subject
+        log.info("User {}, has been notified for the next stage counselling for college {}", firstName, message);
+    }
+}
+
+/**
+ * Subject interface: Defines the contract for all subjects.
+ * Any class that generates events and wants to notify observers must implement this interface.
+ */
+interface Subject {
+    void subscribe(Observer observer); // Register an observer
+    void unSubscribe(Observer observer); // Unregister an observer
+    void notifyObservers(String message); // Notify all registered observers
+}
+
+/**
+ * EnrolledStudentNotifier class: Concrete implementation of Subject.
+ * Maintains a list of observers (students) and notifies them when an event occurs.
+ */
+class EnrolledStudentNotifier implements Subject {
+    // List of observers who have subscribed for notifications
+    private List<Observer> enrolledStudents = new ArrayList<>();
+
+    @Override
+    public void subscribe(Observer observer) {
+        // Add observer to the list
+        enrolledStudents.add(observer);
+    }
+
+    @Override
+    public void unSubscribe(Observer observer) {
+        // Remove observer from the list
+        enrolledStudents.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String message) {
+        // Notify all observers by calling their notify method
+        for (Observer observer : enrolledStudents) {
+            observer.notify(message);
+        }
+    }
+}
+
+/**
+ * CouncellingAgency class: Extends EnrolledStudentNotifier to provide a specific use case.
+ * Represents an agency that can notify students about counselling events.
+ */
+@Builder
+class CouncellingAgency extends EnrolledStudentNotifier {
+	public void notifyMe(Student student) {
+		this.subscribe(student);
+	}
+
+	public void disableNotification(Student student) {
+		this.unSubscribe(student);
+	}
+
+	public void notifyForNextRound(String message) {
+		this.notifyObservers(message);
+	}
+}
+
+public class NotificationSystemLauncher {
+	public static void main(String [] args) {
+		Student student1 = Student.builder()
+								  .firstName("Shubh")
+								  .lastName("Gupta")
+								  .build();
+
+		Student student2 = Student.builder()
+								  .firstName("Muskan")
+								  .lastName("Gupta")
+								  .build();
+
+		CouncellingAgency agency = CouncellingAgency.builder().build();
+		agency.notifyMe(student1);
+		agency.notifyMe(student2);
+
+		agency.notifyForNextRound("New round for councelling will be starting on 10th May, and we have 30 positions for xyz Company.");
+
+		agency.disableNotification(student2);
+	}
+}
