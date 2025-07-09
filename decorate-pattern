@@ -1,5 +1,8 @@
 # Decorator Pattern in Low Level Design (LLD)
 
+-> Decorator pattern is used when we want to add additional functality to the class, on top of it, without changing the current functionality.
+-> It is an alternative of class-classing.
+
 ## What is the Decorator Pattern?
 
 The Decorator Pattern is a structural design pattern that allows you to add new functionality to objects dynamically without altering their structure. It wraps the original object in a decorator class that adds new behaviors or responsibilities.
@@ -87,3 +90,62 @@ public class Main {
 - Debugging can be harder due to many layers of wrapping.
 
 ---
+
+## Difference Between Child Class (Inheritance) and Decorator Pattern
+
+### Child Class (Inheritance)
+- **Definition:** A child class (subclass) extends a parent class (superclass) to inherit its behavior and possibly override or extend it.
+- **How it works:** Compile-time relationship; the child class is tightly coupled to the parent.
+- **Usage:** Use when you want to create a new type that is a specialized version of the parent and the extension is static (known at compile time).
+
+#### Example
+```java
+class Pizza {
+    int billAmount() { return 100; }
+}
+
+class CheesePizza extends Pizza {
+    @Override
+    int billAmount() { return super.billAmount() + 50; }
+}
+```
+
+---
+
+### Decorator Pattern
+- **Definition:** A structural design pattern that allows behavior to be added to individual objects, dynamically, without affecting the behavior of other objects from the same class.
+- **How it works:** Runtime composition; decorators wrap objects and add new behavior.
+- **Usage:** Use when you want to add responsibilities to objects dynamically and transparently, without affecting other objects.
+
+#### Example
+```java
+interface Pizza {
+    int billAmount();
+}
+
+class Margherita implements Pizza {
+    public int billAmount() { return 100; }
+}
+
+class CheeseTopping implements Pizza {
+    private Pizza pizza;
+    CheeseTopping(Pizza pizza) { this.pizza = pizza; }
+    public int billAmount() { return pizza.billAmount() + 50; }
+}
+```
+
+---
+
+### When to Use What
+
+| Use Case                        | Inheritance (Child Class) | Decorator Pattern         |
+|----------------------------------|---------------------------|--------------------------|
+| Behavior known at compile time   | ✔️                        |                          |
+| Need to add behavior dynamically |                           | ✔️                       |
+| Want to avoid class explosion    |                           | ✔️                       |
+| All instances need new behavior  | ✔️                        |                          |
+| Need to combine behaviors flexibly|                          | ✔️                       |
+
+**Summary:**
+- Use inheritance when the extension is static, simple, and all instances of the subclass should have the new behavior.
+- Use decorator pattern when you need to add, remove, or combine behaviors at runtime, or want to avoid creating many subclasses for every combination of features.
