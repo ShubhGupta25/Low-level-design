@@ -1,0 +1,129 @@
+# Abstract Factory Pattern in Low Level Design (LLD)
+
+## What is the Abstract Factory Pattern?
+The Abstract Factory Pattern is a creational design pattern that provides an interface for creating families of related or dependent objects without specifying their concrete classes. It is useful when your system needs to be independent of how its objects are created.
+
+---
+
+## When to Use
+- When you need to create families of related objects (e.g., UI components for different operating systems).
+- When you want to enforce consistency among products in a family.
+- When you want to decouple client code from concrete classes.
+
+---
+
+## How to Use
+1. Define abstract product interfaces for each type of object to be created.
+2. Create concrete product classes implementing these interfaces.
+3. Define an abstract factory interface with methods to create each product.
+4. Implement concrete factory classes for each family of products.
+5. Client uses the abstract factory to create products, remaining unaware of the concrete classes.
+
+---
+
+## Example (Java)
+Suppose you want to create UI components for Windows and Mac:
+
+```java
+// Abstract product interfaces
+interface Button { void paint(); }
+interface Checkbox { void paint(); }
+
+// Concrete products for Windows
+class WindowsButton implements Button {
+    public void paint() { System.out.println("Windows Button"); }
+}
+class WindowsCheckbox implements Checkbox {
+    public void paint() { System.out.println("Windows Checkbox"); }
+}
+
+// Concrete products for Mac
+class MacButton implements Button {
+    public void paint() { System.out.println("Mac Button"); }
+}
+class MacCheckbox implements Checkbox {
+    public void paint() { System.out.println("Mac Checkbox"); }
+}
+
+// Abstract factory
+interface GUIFactory {
+    Button createButton();
+    Checkbox createCheckbox();
+}
+
+// Concrete factories
+class WindowsFactory implements GUIFactory {
+    public Button createButton() { return new WindowsButton(); }
+    public Checkbox createCheckbox() { return new WindowsCheckbox(); }
+}
+class MacFactory implements GUIFactory {
+    public Button createButton() { return new MacButton(); }
+    public Checkbox createCheckbox() { return new MacCheckbox(); }
+}
+
+// Client code
+class Application {
+    private Button button;
+    private Checkbox checkbox;
+    public Application(GUIFactory factory) {
+        button = factory.createButton();
+        checkbox = factory.createCheckbox();
+    }
+    public void paint() {
+        button.paint();
+        checkbox.paint();
+    }
+}
+```
+
+---
+
+## Advantages
+- Ensures consistency among products in a family.
+- Promotes loose coupling between client and concrete classes.
+- Makes it easy to introduce new families of products.
+
+---
+
+## Disadvantages
+- Adding new product types requires changing all factories.
+- Can introduce complexity with many classes and interfaces.
+
+---
+
+## Difference Between Factory Pattern and Abstract Factory Pattern
+
+### Factory Pattern
+- **Purpose:** Creates one type of product based on input or configuration.
+- **Structure:** Has a single factory class with a method to create objects of a common interface or superclass.
+- **Use Case:** Use when you need to create one object at a time, and the type is determined at runtime.
+- **Example:** Creating a notification (Email or SMS) based on user input.
+
+### Abstract Factory Pattern
+- **Purpose:** Creates families of related products (multiple types) without specifying their concrete classes.
+- **Structure:** Has a factory interface for creating each kind of product, and concrete factories for each family.
+- **Use Case:** Use when you need to create groups of related objects (e.g., UI components for different OS) and want to ensure consistency among them.
+- **Example:** Creating both Button and Checkbox for Windows or Mac using a single factory.
+
+---
+
+| Feature                        | Factory Pattern                        | Abstract Factory Pattern                |
+|--------------------------------|----------------------------------------|-----------------------------------------|
+| Number of Products             | One at a time                          | Families/groups of related products     |
+| Factory Structure              | Single factory class                   | Factory interface + multiple factories  |
+| Client Knows Product Types     | Yes (selects type via input/config)    | No (uses abstract factory interface)    |
+| Consistency Among Products     | Not enforced                           | Enforced (products from same family)    |
+| Adding New Product Families    | Simple                                 | Requires new factory implementation     |
+| Example                        | NotificationFactory                    | GUIFactory (Button + Checkbox)          |
+
+---
+
+### When to Use What
+- **Use Factory Pattern** when you need to create a single product and want to encapsulate the creation logic.
+- **Use Abstract Factory Pattern** when you need to create families of related products and want to enforce consistency among them.
+
+---
+
+Factory-pattern -> Object creation depends on factory class based on the input for different types for same thing.
+
+Abstract-factory-pattern -> Object creation depends on factory class, but here multiple products are supported, so multiple factory classes are supported for each product.
