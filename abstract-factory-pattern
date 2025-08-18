@@ -107,14 +107,14 @@ class Application {
 
 ---
 
-| Feature                        | Factory Pattern                        | Abstract Factory Pattern                |
-|--------------------------------|----------------------------------------|-----------------------------------------|
-| Number of Products             | One at a time                          | Families/groups of related products     |
-| Factory Structure              | Single factory class                   | Factory interface + multiple factories  |
-| Client Knows Product Types     | Yes (selects type via input/config)    | No (uses abstract factory interface)    |
-| Consistency Among Products     | Not enforced                           | Enforced (products from same family)    |
-| Adding New Product Families    | Simple                                 | Requires new factory implementation     |
-| Example                        | NotificationFactory                    | GUIFactory (Button + Checkbox)          |
+| Feature                     | Factory Pattern                     | Abstract Factory Pattern               |
+| --------------------------- | ----------------------------------- | -------------------------------------- |
+| Number of Products          | One at a time                       | Families/groups of related products    |
+| Factory Structure           | Single factory class                | Factory interface + multiple factories |
+| Client Knows Product Types  | Yes (selects type via input/config) | No (uses abstract factory interface)   |
+| Consistency Among Products  | Not enforced                        | Enforced (products from same family)   |
+| Adding New Product Families | Simple                              | Requires new factory implementation    |
+| Example                     | NotificationFactory                 | GUIFactory (Button + Checkbox)         |
 
 ---
 

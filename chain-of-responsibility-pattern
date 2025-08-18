@@ -1,0 +1,106 @@
+
+---
+
+# Chain of Responsibility Pattern in Low Level Design (LLD)
+
+## What is the Chain of Responsibility Pattern?
+
+The Chain of Responsibility Pattern is a behavioral design pattern that allows a request to pass through a chain of handlers. Each handler decides either to process the request or to pass it to the next handler in the chain. This decouples the sender of the request from its receivers.
+
+---
+
+## When to Use
+
+- When multiple objects can handle a request, but the handler is not known in advance.
+- When you want to decouple sender and receiver.
+- When you want to process requests in a sequence of steps (e.g., validation, authorization, logging).
+
+---
+
+## How to Use
+
+1. Define a handler interface or abstract class with a method to process requests and a reference to the next handler.
+2. Implement concrete handler classes for each type of processing.
+3. Link handlers together to form a chain.
+4. The client sends the request to the first handler in the chain.
+
+---
+
+## Example (Java)
+
+Suppose you want to process a support ticket through different levels:
+
+```java
+// Handler interface
+abstract class SupportHandler {
+    protected SupportHandler nextHandler;
+    public void setNextHandler(SupportHandler nextHandler) {
+        this.nextHandler = nextHandler;
+    }
+    public abstract void handleRequest(String request);
+}
+
+// Concrete handlers
+class LevelOneSupport extends SupportHandler {
+    public void handleRequest(String request) {
+        if (request.equals("basic")) {
+            System.out.println("Level 1 handled: " + request);
+        } else if (nextHandler != null) {
+            nextHandler.handleRequest(request);
+        }
+    }
+}
+
+class LevelTwoSupport extends SupportHandler {
+    public void handleRequest(String request) {
+        if (request.equals("intermediate")) {
+            System.out.println("Level 2 handled: " + request);
+        } else if (nextHandler != null) {
+            nextHandler.handleRequest(request);
+        }
+    }
+}
+
+class LevelThreeSupport extends SupportHandler {
+    public void handleRequest(String request) {
+        if (request.equals("advanced")) {
+            System.out.println("Level 3 handled: " + request);
+        } else if (nextHandler != null) {
+            nextHandler.handleRequest(request);
+        }
+    }
+}
+
+// Usage
+public class Main {
+    public static void main(String[] args) {
+        SupportHandler level1 = new LevelOneSupport();
+        SupportHandler level2 = new LevelTwoSupport();
+        SupportHandler level3 = new LevelThreeSupport();
+        level1.setNextHandler(level2);
+        level2.setNextHandler(level3);
+
+        level1.handleRequest("basic");        // Handled by Level 1
+        level1.handleRequest("intermediate"); // Handled by Level 2
+        level1.handleRequest("advanced");     // Handled by Level 3
+    }
+}
+```
+
+---
+
+## Advantages
+
+- Decouples sender and receiver.
+- Flexible chain structure; easy to add/remove handlers.
+- Promotes single responsibility for each handler.
+
+---
+
+## Disadvantages
+
+- Request may go unhandled if no handler processes it.
+- Can be hard to debug due to dynamic chain structure.
+- May introduce performance overhead if chain is long.
+
+---
