@@ -1,7 +1,5 @@
 # Observer Pattern in Low Level Design (LLD)
 
-#Event Driven Architecture is the perfect example for Observer Pattern.
-
 ## What is the Observer Pattern?
 
 The Observer Pattern is a behavioral design pattern where an object (the subject) maintains a list of dependents (observers) and notifies them automatically of any state changes, usually by calling one of their methods. It is also known as the Publish-Subscribe pattern.
@@ -10,7 +8,7 @@ The Observer Pattern is a behavioral design pattern where an object (the subject
 
 ## When to Use
 
-- When an object’s state change needs to be communicated to other objects automatically.
+- When an object's state change needs to be communicated to other objects automatically.
 - When you want to decouple the subject from its observers.
 - Common in event-driven systems, GUIs, and real-time data feeds.
 
@@ -27,14 +25,11 @@ The Observer Pattern is a behavioral design pattern where an object (the subject
 
 ## Example (Java)
 
-Suppose you want to implement a notification system where users get notified when a product is back in stock:
-
 ```java
 // Observer interface
 public interface Observer {
     void update(String message);
 }
-
 // Concrete Observer
 public class User implements Observer {
     private String name;
@@ -43,14 +38,12 @@ public class User implements Observer {
         System.out.println(name + " received notification: " + message);
     }
 }
-
 // Subject interface
 public interface Subject {
     void attach(Observer o);
     void detach(Observer o);
     void notifyObservers(String message);
 }
-
 // Concrete Subject
 public class Product implements Subject {
     private List<Observer> observers = new ArrayList<>();
@@ -66,7 +59,6 @@ public class Product implements Subject {
         notifyObservers("Product is back in stock!");
     }
 }
-
 // Usage
 public class Main {
     public static void main(String[] args) {
@@ -98,12 +90,36 @@ public class Main {
 
 ---
 
-Example for it
-------------
-How in my project event-driven system is present, when something happens in one-service the event is sent to all the subscribers.
+## Hands-on Example
 
-In this case 
-Service -> who creates domain-event -> Publisher 
-Other service -> subscriberd to the above service -> Observers
-Subject for us is the framework we are using.
-Subscription file is source of truth for us, instead of attach and detach methods.
+```java
+// Observer interface
+interface Observer {
+    void notify(String message);
+}
+// Student class as Observer
+class Student implements Observer {
+    private String firstName;
+    private String lastName;
+    public void notify(String message) {
+        System.out.println(firstName + " notified for: " + message);
+    }
+}
+// Subject interface
+interface Subject {
+    void subscribe(Observer observer);
+    void unSubscribe(Observer observer);
+    void notifyObservers(String message);
+}
+// Subject implementation
+class EnrolledStudentNotifier implements Subject {
+    private List<Observer> enrolledStudents = new ArrayList<>();
+    public void subscribe(Observer observer) { enrolledStudents.add(observer); }
+    public void unSubscribe(Observer observer) { enrolledStudents.remove(observer); }
+    public void notifyObservers(String message) {
+        for (Observer observer : enrolledStudents) {
+            observer.notify(message);
+        }
+    }
+}
+```
